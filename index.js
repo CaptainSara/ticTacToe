@@ -42,7 +42,12 @@ function drawBoard() {
         if (checkForWinner()) {
           //Winner code goes here
           state.gameFinished = true
-          drawMessage()
+          drawMessage('Congradulations! You won!')
+        }
+
+        if (checkForDraw()) {
+          state.gameFinished = true
+          drawMessage('It´s a draw!')
         }
       })
     }
@@ -53,12 +58,23 @@ function drawBoard() {
   }
 }
 
-function drawMessage() {
+function drawMessage(messege) {
   const banner = document.createElement('div')
   banner.classList.add('banner')
 
   const h1 = document.createElement('h1')
-  h1.innerText = 'Congradulations! You won. '
+  h1.innerText = messege
+
+  banner.append(h1)
+
+  state.gameElement.append(banner)
+}
+
+function checkForDraw() {
+  return state.cells.every(function (cell) {
+    return cell !== null
+  })
+  
 }
 
 function checkForWinner() {
